@@ -11,7 +11,6 @@ const App = () => {
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
   useEffect(() => {
-    for (let i = 1; i < 26; i++) {
       axios.get('https://pokeapi.co/api/v2/pokemon')
         .then(res => {
           let charList = [];
@@ -22,8 +21,7 @@ const App = () => {
         })
         .catch(err => {
           console.log(err);
-        })
-    };
+        });
   }, []);
 
   return (
