@@ -1,7 +1,22 @@
+html {
+  max-width: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-image: url('./images/sw-bg.jpg');
-  background-size: cover;
+  background-image: url('./images/pk-bg.jpg');
+  background-size: contain;
+}
+
+div.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+div.character-list {
+  display: flex;
+  flex-wrap: wrap;
 }
