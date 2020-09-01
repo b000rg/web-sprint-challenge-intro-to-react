@@ -30,7 +30,7 @@ const Character = ({pokemon}) => {
         <CharacterCard>
             {console.log(pokemonData)}
             <h2>{pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}</h2>
-            <img src={pokemonData.sprites?.versions['generation-vii']['ultra-sun-ultra-moon'].front_default} alt={`Picture of ${pokemon.name}`}/>
+            <img src={pokemonData.sprites?.versions['generation-vii']['ultra-sun-ultra-moon'].front_default} alt={pokemon.name}/>
             {pokemonData.stats ? <Collapsible name="Stats" content={pokemonData.stats} /> : null}
         </CharacterCard>
     );
