@@ -8,7 +8,7 @@ const CollapsibleSection = styled.div`
 `;
 const ArrowImg = styled.img`
     transition: transform 0.5s;
-    transform: ${props => props.collapsed ? null : 'rotate(90deg)'};
+    transform: ${props => props.collapsed ? 'rotate(-90deg)' : null};
     width: 20px;
 `;
 
@@ -26,7 +26,7 @@ const Collapsible = ({name, content}) => {
                 <ArrowImg className="arrow" src={arrow} alt="expand" onClick={toggle} collapsed={collapsed} />
             </div>
             <div>
-                {content}
+                {collapsed ? null : <ul>{content.map((stat, i) => <li key={i}>{stat.stat.name} - {stat.base_stat}</li>)}</ul>}
             </div>
         </CollapsibleSection>
     );
