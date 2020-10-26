@@ -2,3 +2,20 @@
   text-align: center;
 }
 /* write your parent styles in here for your App.js */
+table  {
+  border-collapse: collapse;
+}
+
+table thead {
+  background-color: darkslategray;
+  color: white;
+}
+
+table th, table td {
+  border: 1px solid black;
+  width: calc(300px / 6);
+}
+
+table th {
+  font-size: 10px;
+}
