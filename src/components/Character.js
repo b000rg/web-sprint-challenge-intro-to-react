@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import Types from './Types';
 
 const Character = ({pokemon}) => {
-    const [pokemonData, setPokemonData] = useState({name: pokemon.name});
+    const [pokemonData, setPokemonData] = useState({name: pokemon.name, loaded: false});
 
     useEffect(() => {
         axios
@@ -11,8 +12,12 @@ const Character = ({pokemon}) => {
             .then(({data}) => {
                 setPokemonData({
                     name: pokemon.name,
+                    loaded: true,
                     imgUrl: data.sprites.front_default,
-                    types: data.types
+                    types: data.types,
+                    id: data.id,
+                    height: data.height,
+                    weight: data.weight
                 });
             })
             .catch(err => {
@@ -22,13 +27,20 @@ const Character = ({pokemon}) => {
 
     return (
         <Card>
-            <Name>{capitalize(pokemonData.name)}</Name>
-            {(pokemonData.imgUrl) ? <Image src={pokemonData.imgUrl} /> : null}
-            <TypesContainer>
-                {(pokemonData.types) ? pokemonData.types.map(type =>
-                    <Type type={type.type.name} key={type.slot}>{capitalize(type.type.name)}</Type>
-                ) : null}
-            </TypesContainer>
+            <div>
+                <span>#{pokemonData.id}</span>
+                <Name>{capitalize(pokemonData.name)}</Name>
+            </div>
+            {(pokemonData.loaded) ? (
+                <div>
+                    <Image src={pokemonData.imgUrl} />
+                    <Types types={pokemonData.types} />
+                    <div>
+                        <Metric>Height: {(pokemonData.height * 0.1).toFixed(1)}m</Metric>
+                        <Metric>Weight: {(pokemonData.weight * 0.1).toFixed(1)}kg</Metric>
+                    </div>
+                </div>
+            ) : null}
         </Card>
     );
 };
@@ -39,7 +51,7 @@ const Card = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 120px;
+    width: 250px;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
@@ -47,45 +59,17 @@ const Card = styled.div`
 `;
 
 const Name = styled.h3`
-    margin: 3px 0;
+    display: inline;
+    margin: 3px 10px;
 `;
 
 const Image = styled.img`
 
 `;
 
-const TypesContainer = styled.div`
-    margin: 3px 0;
+const Metric = styled.p`
+    display: inline;
+    margin: 5px;
 `;
 
-const Type = styled.span`
-    margin: 0 3px;
-    padding: 3px 6px;
-    border-radius: 10px;
-    background-color: ${({type}) => {
-        return typeColors[type];
-    }};
-`;
-
-const typeColors = {
-    normal: '#A8A77A',
-    fire:  '#EE8130',
-    water:  '#6390F0',
-    electric:  '#F7D02C',
-    grass:  '#7AC74C',
-    ice:  '#96D9D6',
-    fighting:  '#C22E28',
-    poison:  '#A33EA1',
-    ground:  '#E2BF65',
-    flying:  '#A98FF3',
-    psychic:  '#F95587',
-    bug:  '#A6B91A',
-    rock:  '#B6A136',
-    ghost:  '#735797',
-    dragon:  '#6F35FC',
-    dark:  '#705746',
-    steel:  '#B7B7CE',
-    fairy:  '#D685AD'
-}
-
-export default Character;
+export {Character as default, capitalize};
